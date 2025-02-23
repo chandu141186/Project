@@ -12,3 +12,12 @@
          name: nginx
          state: started
          enabled: yes
+   - name: Download catalogue Application
+     ansible.builtin.get_url:
+        url: https://roboshop-builds.s3.amazonaws.com/web.zip
+        dest: /tmp
+   - name: Unarchive a file that is already on the remote machine
+     ansible.builtin.unarchive:
+        src: /tmp/web.zip
+        dest: /usr/share/nginx/html
+        remote_src: yes
