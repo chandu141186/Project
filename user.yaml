@@ -8,7 +8,7 @@
      ansible.builtin.package:
         name: nodejs
         state: present
-        
+
    - name: create User
      ansible.builtin.user:
       name: roboshop
@@ -54,7 +54,7 @@
          state: present
 
    - name: get the categories count
-     ansible.builtin.command:  mongo --host mongodb.chandudevops.shop --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+     ansible.builtin.command:  mongo --host mongodb.chandudevops.shop --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
      register: user_count
 
    - name: load catalogue data
