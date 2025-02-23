@@ -1,0 +1,4 @@
+- name : rabbitmq
+  hosts: rabbitmq
+  become: yes
+  tasks:

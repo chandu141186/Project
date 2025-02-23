@@ -1,0 +1,4 @@
+- name : catalogue
+  hosts: catalogue
+  become: yes
+  tasks:

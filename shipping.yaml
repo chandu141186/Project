@@ -1,0 +1,4 @@
+- name : shipping
+  hosts: shipping
+  become: yes
+  tasks:

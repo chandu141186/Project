@@ -1,0 +1,4 @@
+- name : user
+  hosts: user
+  become: yes
+  tasks:

@@ -1,0 +1,4 @@
+- name : redis
+  hosts: redis
+  become: yes
+  tasks:
