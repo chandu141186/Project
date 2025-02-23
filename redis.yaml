@@ -15,7 +15,7 @@
   - name: install redis
     ansible.builtin.dnf:
       name: redis
-      state: presen
+      state: present
 
   - name: allow remote connections
     ansible.builtin.replace:
