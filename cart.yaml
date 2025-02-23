@@ -2,3 +2,71 @@
   hosts: cart
   become: yes
   tasks:
+- name : catalogue
+  hosts: catalogue
+  become: yes
+  tasks:
+   - name: Disable Old Version and Enable Specfic Version
+     ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+   - name: Install Mongodb
+     ansible.builtin.package:
+        name: nodejs
+        state: present
+   - name: create User
+     ansible.builtin.user:
+      name: roboshop
+   - name: Create a directory if it does not exist
+     ansible.builtin.file:
+      path: /app
+      state: directory
+   - name: Download catalogue Application
+     ansible.builtin.get_url:
+        url: https://roboshop-builds.s3.amazonaws.com/catalogue.zip
+        dest: /tmp
+        
+   - name: Unarchive a file that is already on the remote machine
+     ansible.builtin.unarchive:
+        src: /tmp/catalogue.zip
+        dest: /app
+        remote_src: yes
+
+   - name: Install Dependency
+     ansible.builtin.command: npm install
+     args:
+         chdir: /app
+   
+   - name : Copy catalogue repo
+     ansible.builtin.copy:
+         src: catalogue.service
+         dest: /etc/systemd/system/catalogue.service
+
+   - name: Catalogue Demon reload
+     ansible.builtin.systemd_service:
+       daemon_reload: true
+      
+   - name : Copy mongodb repo
+     ansible.builtin.copy:
+         src: mongodb.repo
+         dest: /etc/yum.repos.d/mongo.repo
+
+   - name: Install Mongodb
+     ansible.builtin.package:
+         name: mongodb-org-shell
+         state: present
+
+   - name: get the categories count
+     ansible.builtin.command:  mongo --host mongodb.chandudevops.shop --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+     register: product_count
+
+   - name: load catalogue data
+     ansible.builtin.command: mongo --host mongodb.chandudevops.shop < /app/schema/catalogue.js
+     when: product_count.stdout == "0" # keep double quotes
+     
+      
+   - name: Start and Enable Mongodb service
+     ansible.builtin.service:
+      name: catalogue
+      state: restarted
+      enabled: yes
+      
+  
