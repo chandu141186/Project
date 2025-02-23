@@ -4,7 +4,7 @@
   become: yes
   tasks:
   - name: install remi release
-    ansible.builtin.package: # check pacakge will work not
+    ansible.builtin.dnf: # check pacakge will work not
       name: https://www.rpmfind.net/linux/remi/enterprise/8/remi/x86_64/remi-release-8.10-2.el8.remi.noarch.rpm
       state: present
       disable_gpg_check: true
