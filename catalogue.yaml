@@ -24,8 +24,13 @@
         src: /tmp/catalogue.zip
         dest: /app
         remote_src: yes
-     
-
+   - name: Install Dependency
+     ansible.builtin.command: npm install
+     args:
+         chdir: /app
    
-
+   - name : Copy catalogue repo
+     ansible.builtin.copy:
+         src: catalogue.service
+         dest: /etc/systemd/system/catalogue.service
   
