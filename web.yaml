@@ -2,13 +2,13 @@
   hosts: web
   become: yes
   tasks:
-   - name: Install Mongodb
+   - name: Install Nginx
      ansible.builtin.package:
-         name: mongodb-org
+         name: Nginx
          state: present
 
    - name: Start and Enable Mongodb service
      ansible.builtin.service:
-         name: mongod
+         name: Nginx
          state: started
          enabled: yes
