@@ -10,16 +10,19 @@
       ansible.builtin.package:
          name: mongodb-org
          state: present
+
     - name: Start and Enable Mongodb service
       ansible.builtin.service:
          name: mongod
          state: started
-         Enable: yes
+         enabled: yes
+
     - name: Replace old hostname with new hostname (requires Ansible >= 2.4)
       ansible.builtin.replace:
          path: /etc/mongod.conf
          regexp: '127.0.0.1'
          replace: '0.0.0.0'
+
     - name: Restart Mongodb service
       ansible.builtin.service:
          name: mongod
