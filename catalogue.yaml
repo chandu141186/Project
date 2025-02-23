@@ -2,4 +2,10 @@
   hosts: catalogue
   become: yes
   tasks:
-   - name:
+   - name: Disable Old Version and Enable Specfic Version
+     ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+   - name: Install Mongodb
+     ansible.builtin.package:
+        name: nodejs
+        state: present
+  
