@@ -58,7 +58,7 @@
       
    - name: Start and Enable Mongodb service
      ansible.builtin.service:
-      name: mongod
+      name: catalogue
       state: restarted
       enabled: yes
       
