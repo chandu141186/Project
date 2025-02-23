@@ -4,6 +4,7 @@
   tasks:
    - name: Disable Old Version and Enable Specfic Version
      ansible.builtin.shell: dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+
    - name: Install nodejs
      ansible.builtin.package:
         name: nodejs
@@ -62,7 +63,7 @@
    #  when: product_count.stdout == "0" # keep double quotes
      
       
-   - name: Start and Enable Mongodb service
+   - name: Start and Enable cart service
      ansible.builtin.service:
       name: cart
       state: restarted
