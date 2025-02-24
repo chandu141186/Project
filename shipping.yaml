@@ -8,7 +8,7 @@
 
    - name: Install Maven Package
      ansible.builtin.dnf: 
-         name: Maven
+         name: maven
          state: present
 
    - name: create User
