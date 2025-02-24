@@ -1,6 +1,9 @@
 - name : shipping
   hosts: shipping
   become: yes
+  vars:
+    mysql_password: RoboShop@1
+ 
   tasks:
 
    - name: Install Maven Package
@@ -68,9 +71,6 @@
    - name: load cities data
      ansible.builtin.shell: "mysql -h mysql.daws76s.online -uroot -p{{mysql_password}}  < /app/schema/shipping.sql"
      when: schema.stdout != "1"
-
-
-       
 
    - name: Start and Enable shipping service
      ansible.builtin.service:
