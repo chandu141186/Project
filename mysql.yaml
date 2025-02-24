@@ -2,3 +2,24 @@
   hosts: mysql
   become: yes
   tasks:
+    - name: Disable Old Version and Enable Specfic Version
+      ansible.builtin.shell: dnf module disable mysql -y
+ 
+    - name : Copy mysql repo
+      ansible.builtin.copy:
+         src: mysql.repo
+         dest: /etc/yum.repos.d/mysql.repo
+    - name: Install mysql
+      ansible.builtin.package:
+         name: mysql-community-server
+         state: present
+    - name: Start and Enable mysql service
+      ansible.builtin.service:
+         name: mysqld
+         state: started
+         enabled: yes
+    - name: SetUp Password for mysql login
+      ansible.builtin.shell: mysql_secure_installation --set-root-pass RoboShop@1
+
+ 
+   
